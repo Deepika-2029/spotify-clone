@@ -1,4 +1,18 @@
-se
-      - key: FRONTEND_URL
-              sync: false
-              
+services:
+  - type: static
+      name: spotify-clone-frontend
+          staticPublishPath: .
+              buildCommand: echo "No build needed"
+
+                - type: web
+                    name: spotify-clone-api
+                        env: docker
+                            dockerfilePath: ./backend/Dockerfile
+                                dockerContext: ./backend
+                                    plan: free
+                                        envVars:
+                                              - key: MONGO_URI
+                                                      sync: false
+                                                            -key: FRONTEND_URL
+                                                                    sync: false
+                                                                    
