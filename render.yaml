@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: spotify-clone-api
+    env: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    plan: free
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false       # Set this manually in Render dashboard
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL
+        sync: false       # Set to your frontend URL after deploy

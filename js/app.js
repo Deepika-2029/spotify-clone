@@ -178,6 +178,81 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.key === 'Escape') overlay.classList.remove('open');
   });
 
+  // ── Auth Modal wiring ─────────────────────────────────────
+  const authOverlay = document.getElementById('authModalOverlay');
+
+  function openAuthModal(tab = 'login') {
+    authOverlay?.classList.add('open');
+    switchTab(tab);
+  }
+  function closeAuthModal() { authOverlay?.classList.remove('open'); }
+
+  function switchTab(which) {
+    document.getElementById('loginForm')?.classList.toggle('active', which === 'login');
+    document.getElementById('registerForm')?.classList.toggle('active', which === 'register');
+    document.getElementById('tabLogin')?.classList.toggle('active', which === 'login');
+    document.getElementById('tabRegister')?.classList.toggle('active', which === 'register');
+    document.getElementById('loginError').textContent   = '';
+    document.getElementById('registerError').textContent = '';
+  }
+
+  document.getElementById('authLoginBtn')?.addEventListener('click', () => openAuthModal('login'));
+  document.getElementById('authModalClose')?.addEventListener('click', closeAuthModal);
+  authOverlay?.addEventListener('click', e => { if (e.target === authOverlay) closeAuthModal(); });
+  document.getElementById('tabLogin')?.addEventListener('click', () => switchTab('login'));
+  document.getElementById('tabRegister')?.addEventListener('click', () => switchTab('register'));
+
+  document.getElementById('authLogoutBtn')?.addEventListener('click', () => {
+    Api.logout();
+    Player.showToast('👋 Logged out');
+  });
+
+  // Login form submit
+  document.getElementById('loginForm')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('loginSubmitBtn');
+    const errEl = document.getElementById('loginError');
+    btn.disabled = true; btn.textContent = 'Logging in...';
+    try {
+      await Api.login(
+        document.getElementById('loginEmail').value,
+        document.getElementById('loginPassword').value
+      );
+      Api.updateAuthUI();
+      closeAuthModal();
+      Player.showToast('✅ Welcome back!');
+    } catch (err) {
+      errEl.textContent = err.message;
+    } finally {
+      btn.disabled = false; btn.textContent = 'Log In';
+    }
+  });
+
+  // Register form submit
+  document.getElementById('registerForm')?.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn = document.getElementById('registerSubmitBtn');
+    const errEl = document.getElementById('registerError');
+    btn.disabled = true; btn.textContent = 'Creating account...';
+    try {
+      await Api.register(
+        document.getElementById('regName').value,
+        document.getElementById('regEmail').value,
+        document.getElementById('regPassword').value
+      );
+      Api.updateAuthUI();
+      closeAuthModal();
+      Player.showToast('🎉 Account created! Welcome!');
+    } catch (err) {
+      errEl.textContent = err.message;
+    } finally {
+      btn.disabled = false; btn.textContent = 'Create Account';
+    }
+  });
+
+  // Init auth UI on load
+  Api.updateAuthUI();
+
   // ── Genre card clicks → search that genre ─────────────
   document.getElementById('genreGrid')?.addEventListener('click', e => {
     const card = e.target.closest('.genre-card');
