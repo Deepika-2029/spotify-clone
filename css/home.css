@@ -1,0 +1,38 @@
+/* Home page gradient backgrounds for quick picks */
+.qi-art { background: var(--bg-highlight); }
+
+/* Color palettes for cards */
+.color-0 { background: linear-gradient(135deg, #e91429, #b90e1f); }
+.color-1 { background: linear-gradient(135deg, #1e3264, #121e3d); }
+.color-2 { background: linear-gradient(135deg, #8400e7, #5c00a1); }
+.color-3 { background: linear-gradient(135deg, #ba5d07, #8e4705); }
+.color-4 { background: linear-gradient(135deg, #0d73ec, #095bbd); }
+.color-5 { background: linear-gradient(135deg, #148a08, #0e6305); }
+.color-6 { background: linear-gradient(135deg, #e8115b, #b30d46); }
+.color-7 { background: linear-gradient(135deg, #6400f4, #4800b0); }
+.color-8 { background: linear-gradient(135deg, #1e3264, #121e3d); }
+.color-9 { background: linear-gradient(135deg, #27856a, #1d634f); }
+.color-10 { background: linear-gradient(135deg, #9cf0e1, #6ec0b2); color: #000 !important; }
+.color-11 { background: linear-gradient(135deg, #f59b23, #c27818); }
+
+/* Animated playing indicator */
+@keyframes barAnim1 { 0%,100%{height:4px} 50%{height:12px} }
+@keyframes barAnim2 { 0%,100%{height:8px} 50%{height:4px} }
+@keyframes barAnim3 { 0%,100%{height:12px} 50%{height:6px} }
+.playing-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+}
+.playing-bars span {
+  width: 3px;
+  background: var(--green);
+  border-radius: 1px;
+  animation-duration: 0.8s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+}
+.playing-bars span:nth-child(1) { animation-name: barAnim1; height: 4px; }
+.playing-bars span:nth-child(2) { animation-name: barAnim2; height: 8px; }
+.playing-bars span:nth-child(3) { animation-name: barAnim3; height: 12px; }
