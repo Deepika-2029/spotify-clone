@@ -1,33 +1,13 @@
 services:
-  # ── Frontend Static Site ─────────────────────────────────
-  - type: web
-    name: spotify-clone-frontend
-    env: static
-    staticPublishPath: .
-    buildCommand: echo "No build needed"
-    plan: free
-    headers:
-      - path: /*
-        name: Cache-Control
-        value: no-cache
-    routes:
-      - type: rewrite
-        source: /*
-        destination: /index.html
+  - type: static
+      name: spotify-clone-frontend
+          staticPublishPath: .
+              buildCommand: echo "No build needed"
 
-  # ── Backend API (Node.js + MongoDB) ──────────────────────
-  - type: web
-    name: spotify-clone-api
-    env: docker
-    dockerfilePath: ./backend/Dockerfile
-    dockerContext: ./backend
-    plan: free
-    envVars:
-      - key: PORT
-        value: 5000
-      - key: MONGO_URI
-        sync: false
-      - key: JWT_SECRET
-        generateValue: true
-      - key: FRONTEND_URL
-        sync: false
+                - type: web
+                    name: spotify-clone-api
+                        env: docker
+                            dockerfilePath: ./backend/Dockerfile
+                                dockerContext: ./backend
+                                    plan: free
+                                    
