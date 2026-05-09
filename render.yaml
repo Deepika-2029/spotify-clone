@@ -1,14 +1,14 @@
 version: "1"
 services:
 - type: static
-  name: spotify-clone-frontend
-    staticPublishPath: .
-      buildCommand: echo "No build needed"
+name: spotify-clone-frontend
+staticPublishPath: .
+buildCommand: echo "No build needed"
 
-      - type: web
-        name: spotify-clone-api
-          env: docker
-            dockerfilePath: ./backend/Dockerfile
-              dockerContext: ./backend
-                plan: free
-                
+- type: web
+  name: spotify-clone-api
+    env: docker
+      dockerfilePath: ./backend/Dockerfile
+        dockerContext: ./backend
+          plan: free
+          
