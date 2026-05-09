@@ -4,7 +4,9 @@
  * Falls back to local DATA if backend is unavailable.
  */
 
-const API_BASE = 'http://localhost:5000/api'; // Change to Render URL after deploy
+const API_BASE = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+  ? 'http://localhost:5000/api'
+  : 'https://spotify-clone-jms8.onrender.com/api';
 
 const Api = (() => {
 
